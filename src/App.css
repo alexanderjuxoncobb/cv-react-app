@@ -155,6 +155,7 @@ h5.middle-item {
 
 .education-flex {
   display: flex;
+  margin: 8px 0;
 }
 
 .education-flex > div:first-child {
@@ -165,6 +166,10 @@ h5.middle-item {
 
 .education-flex > div:nth-child(2) {
   flex-basis: 70%;
+}
+
+.education-title {
+  background-color: rgba(0, 0, 0, 0.115);
 }
 
 .school-name {
