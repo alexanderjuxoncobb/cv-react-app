@@ -7,11 +7,20 @@ function Input({ item, onInputChange, formData }) {
   return (
     <div>
       <label htmlFor={item}> {item} </label>
-      <input
-        id={item}
-        onChange={(e) => onInputChange(item, e.target.value)}
-        value={formData[item] || ""}
-      />
+      {item === "Description" ? (
+        <textarea
+          id={item}
+          onChange={(e) => onInputChange(item, e.target.value)}
+          value={formData[item] || ""}
+        ></textarea>
+      ) : (
+        <input
+          id={item}
+          onChange={(e) => onInputChange(item, e.target.value)}
+          value={formData[item] || ""}
+          type={item === "Start Date" || item === "End Date" ? "month" : "text"}
+        />
+      )}
     </div>
   );
 }
@@ -40,6 +49,9 @@ function Edit(props) {
           />
         ))}
       </div>
+      {props.title === "Education" && props.index === props.keyValue && (
+        <button>Submit</button>
+      )}
     </div>
   );
 }
@@ -72,6 +84,24 @@ function Sidebar({ onInputChange, formData, handleIndexChange, index }) {
   );
 }
 
+function EducationItem({ formData }) {
+  return (
+    <div className="education-flex">
+      <div>
+        <div className="school-name">{formData["School"]}</div>
+        <div>
+          {formData["Start Date"]} {formData["Start Date"] && "--"}{" "}
+          {formData["End Date"]}
+        </div>
+      </div>
+      <div>
+        <div>{formData["Degree"]}</div>
+        <div className="description">{formData["Description"]}</div>
+      </div>
+    </div>
+  );
+}
+
 function MainContent({ formData }) {
   return (
     <div className="CV">
@@ -86,6 +116,8 @@ function MainContent({ formData }) {
       <div className="CV-Education">
         <h3>Education</h3>
         {/* need to make this so that 1. it has good layout adn 2. so that you can add multiple educations */}
+
+        <EducationItem formData={formData} />
       </div>
       <div>3</div>
     </div>

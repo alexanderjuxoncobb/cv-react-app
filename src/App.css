@@ -52,14 +52,15 @@
 }
 
 .edit-card {
-  --card-background-color: rgba(244, 244, 244, 0.701);
+  --card-background-color: rgb(244, 244, 244);
   background-color: var(--card-background-color);
   padding: 20px;
   border-radius: 30px;
 }
 
 .edit-card label,
-.edit-card input {
+.edit-card input,
+.edit-card textarea {
   display: block;
   margin: 5px;
 }
@@ -77,12 +78,15 @@
   transition: transform 0.3s;
 }
 
-input {
+input,
+textarea {
   background-color: rgba(194, 194, 194, 0.368);
   height: 1.5rem;
   width: 90%;
   color: black;
   border-radius: 10px;
+  resize: vertical;
+  max-height: 300px;
 }
 
 label {
@@ -116,7 +120,7 @@ label {
 }
 
 .edit-card.open > div:nth-child(2) {
-  max-height: 500px; /* Adjust based on your content */
+  max-height: 700px; /* Adjust based on your content */
   opacity: 1;
 }
 
@@ -129,7 +133,7 @@ label {
 
 .CV-header {
   min-height: 100px;
-  background-color: rgba(124, 124, 145, 0.379);
+  background-color: rgba(52, 91, 219, 0.328);
 }
 
 .spreader {
@@ -147,4 +151,28 @@ h5.middle-item {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.education-flex {
+  display: flex;
+}
+
+.education-flex > div:first-child {
+  /* flex: 0; */
+  /* width: 300px; */
+  flex-basis: 30%;
+}
+
+.education-flex > div:nth-child(2) {
+  flex-basis: 70%;
+}
+
+.school-name {
+  font-weight: 600;
+}
+
+.description {
+  white-space: pre-wrap;
+  text-align: start;
+  padding-left: 5px;
 }
