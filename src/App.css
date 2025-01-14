@@ -56,6 +56,7 @@
   background-color: var(--card-background-color);
   padding: 20px;
   border-radius: 30px;
+  margin-top: 20px;
 }
 
 .edit-card label,
@@ -136,6 +137,11 @@ label {
   background-color: rgba(52, 91, 219, 0.328);
 }
 
+.CV-header h3 {
+  margin-top: 0;
+  padding-top: 10px; /* Optional: if you want some space from the top */
+}
+
 .spreader {
   display: flex;
   position: relative;
@@ -155,7 +161,40 @@ h5.middle-item {
 
 .education-flex {
   display: flex;
-  margin: 8px 0;
+  margin: 20px 0;
+  /* border-top: 1px solid; */
+  position: relative;
+}
+
+.delete-button {
+  position: absolute;
+  right: -40px;
+  background: transparent;
+  color: red;
+  border-radius: 50%;
+  width: 40px;
+  height: 20px;
+  padding: 0;
+}
+
+.edit-button {
+  position: absolute;
+  right: -70px;
+  background: transparent;
+  color: black;
+  border-radius: 50%;
+  width: 40px;
+  height: 20px;
+  padding: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16.293 2.293l5.414 5.414a1 1 0 0 1 0 1.414L8.414 22.414A1 1 0 0 1 7.707 22.707H2.293A1 1 0 0 1 1 21.414V16a1 1 0 0 1 .293-.707L14.586 2a1 1 0 0 1 1.414 0zM3 16.414V20h3.586l12-12L15 4.414l-12 12z'/%3E%3C/svg%3E");
+  width: 24px;
+  height: 24px;
+}
+
+.delete-button:hover,
+.edit-button:hover {
+  transform: scale(1.5);
+  transition: transform 0.3s;
 }
 
 .education-flex > div:first-child {
@@ -174,6 +213,10 @@ h5.middle-item {
 
 .school-name {
   font-weight: 600;
+}
+
+.degree-name {
+  text-align: start;
 }
 
 .description {

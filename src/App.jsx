@@ -2,28 +2,7 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-
-function Input({ item, onInputChange, formData }) {
-  return (
-    <div>
-      <label htmlFor={item}> {item} </label>
-      {item === "Description" ? (
-        <textarea
-          id={item}
-          onChange={(e) => onInputChange(item, e.target.value)}
-          value={formData[item] || ""}
-        ></textarea>
-      ) : (
-        <input
-          id={item}
-          onChange={(e) => onInputChange(item, e.target.value)}
-          value={formData[item] || ""}
-          type={item === "Start Date" || item === "End Date" ? "month" : "text"}
-        />
-      )}
-    </div>
-  );
-}
+import Input from "./components/Input";
 
 function Edit(props) {
   return (
@@ -103,7 +82,7 @@ function Sidebar({
   );
 }
 
-function EducationItem({ schoolData }) {
+function EducationItem({ schoolData, deleteSchoolData, editSchoolData }) {
   return (
     <div className="education-flex">
       <div>
@@ -114,14 +93,24 @@ function EducationItem({ schoolData }) {
         </div>
       </div>
       <div>
-        <div className="school-name">{schoolData["Degree"]}</div>
+        <div className="school-name degree-name">{schoolData["Degree"]}</div>
         <div className="description">{schoolData["Description"]}</div>
       </div>
+      <button
+        className="delete-button"
+        onClick={() => deleteSchoolData(schoolData["School"])}
+      >
+        &times;
+      </button>
+      <button
+        className="edit-button"
+        onClick={() => editSchoolData(schoolData)}
+      ></button>
     </div>
   );
 }
 
-function MainContent({ formData }) {
+function MainContent({ formData, deleteSchoolData, editSchoolData }) {
   return (
     <div className="CV">
       <div className="CV-header">
@@ -137,7 +126,12 @@ function MainContent({ formData }) {
         {/* need to make this so that 1. it has good layout adn 2. so that you can add multiple educations */}
 
         {formData["Schools"]?.map((school) => (
-          <EducationItem schoolData={school} key={school.School} />
+          <EducationItem
+            schoolData={school}
+            key={school.School}
+            deleteSchoolData={deleteSchoolData}
+            editSchoolData={editSchoolData}
+          />
         ))}
       </div>
       <div>3</div>
@@ -159,17 +153,48 @@ function App() {
   };
 
   const submitEducation = (schoolData) => {
+    const exists = formData.Schools?.some(
+      (school) => school.School === schoolData.School
+    );
+
+    const updatedSchools = exists
+      ? formData.Schools.map((school) =>
+          school.School === schoolData.School ? schoolData : school
+        )
+      : formData.Schools
+      ? [...formData.Schools, schoolData]
+      : [schoolData];
+
     const updatedData = {
       ...formData,
-      Schools: formData.Schools
-        ? [...formData.Schools, schoolData]
-        : [schoolData],
+      Schools: updatedSchools,
       School: "",
       "Start Date": "",
       "End Date": "",
       Degree: "",
       Description: "",
     };
+    setFormData(updatedData);
+  };
+
+  const deleteSchoolData = (school) => {
+    const updatedData = { ...formData };
+    updatedData.Schools = updatedData.Schools?.filter(
+      (item) => item.School !== school
+    );
+    setFormData(updatedData);
+  };
+
+  const editSchoolData = (schoolData) => {
+    const updatedData = {
+      ...formData,
+      School: schoolData.School,
+      "Start Date": schoolData["Start Date"],
+      "End Date": schoolData["End Date"],
+      Degree: schoolData.Degree,
+      Description: schoolData.Description,
+    };
+    setEditIndex(1);
     setFormData(updatedData);
   };
 
@@ -182,7 +207,11 @@ function App() {
         index={editIndex}
         submitEducation={submitEducation}
       />
-      <MainContent formData={formData} />
+      <MainContent
+        formData={formData}
+        deleteSchoolData={deleteSchoolData}
+        editSchoolData={editSchoolData}
+      />
     </div>
   );
 }
